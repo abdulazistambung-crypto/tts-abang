@@ -1,0 +1,109 @@
+html<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TTS 10 Soal</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#8b5cf6">
+<style>
+  body { font-family: sans-serif; background:#f3e8ff; padding:10px; margin:0; }
+ .wrap { background:white; padding:15px; border-radius:12px; max-width:700px; margin:auto; box-shadow:0 4px 10px rgba(0,0,0,0.1); }
+  h1 { text-align:center; color:#6b21a8; font-size:22px; }
+ .grid { display: grid; grid-template-columns: repeat(7, 1fr); gap:4px; justify-content:center; margin:15px auto; max-width:320px; }
+  input { width:100%; aspect-ratio:1/1; text-align:center; font-size:16px; font-weight:bold; text-transform:uppercase; border:2px solid #8b5cf6; border-radius:6px; }
+  input.hitam { background:#1f2937; border-color:#1f2937; cursor:default; }
+  input.benar { background:#bbf7d0; border-color:#16a34a; }
+  input.salah { background:#fecaca; border-color:#dc2626; }
+  button { padding:12px 20px; background:#8b5cf6; color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer; margin:5px; width:48%; }
+ .soal { display:flex; gap:15px; margin-top:15px; font-size:14px; flex-wrap:wrap; }
+ .soal div { flex:1; min-width:250px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🧩 TTS 10 Soal</h1>
+  <div class="grid" id="grid"></div>
+  <div style="text-align:center;">
+    <button onclick="cek()">✅ Cek</button>
+    <button onclick="reset()">🔄 Reset</button>
+  </div>
+
+  <div class="soal">
+    <div>
+      <h3>Mendatar →</h3>
+      <p>1. Bahasa web [B1] = HTML</p>
+      <p>3. Otak PC [B3] = CPU</p>
+      <p>5. Lumba-lumba [B5] = LUMBA</p>
+      <p>7. Keyboard [B7] = KEYBOARD</p>
+      <p>9. Kota Pahlawan [B6] = SURABAYA</p>
+    </div>
+    <div>
+      <h3>Menurun ↓</h3>
+      <p>2. WWW [K3] = World Wide Web</p>
+      <p>4. Bendera RI [K5] = MERAH</p>
+      <p>6. WA [K2] = WhatsApp</p>
+      <p>8. Simpan [K7] = SAVE</p>
+      <p>10. Matahari [K1] = SURYA</p>
+    </div>
+  </div>
+</div>
+
+<script>
+const KUNCI = [
+  ['H','T','M','L','','',''],
+  ['S','','W','','','', ''],
+  ['U','R','Y','A','','',''],
+  ['R','','A','',''],
+  ['A','B','Y','','L','U','M'],
+  ['S','U','R','A','B','A','Y'],
+  ['K','E','Y','B','O','A','R']
+];
+
+const grid = document.getElementById('grid');
+KUNCI.flat().forEach(huruf => {
+  let inp = document.createElement('input');
+  if(huruf === ''){
+    inp.disabled = true;
+    inp.className = 'hitam';
+  } else {
+    inp.maxLength = 1;
+    inp.addEventListener('input', e => {
+      if(e.target.value) e.target.nextElementSibling?.focus();
+    });
+  }
+  grid.appendChild(inp);
+});
+
+function cek(){
+  const inputs = grid.querySelectorAll('input:not(.hitam)');
+  let idx = 0, benar = 0, total = 0;
+  KUNCI.flat().forEach(huruf => {
+    if(huruf!== ''){
+      total++;
+      let val = inputs[idx].value.toUpperCase();
+      if(val === huruf){
+        inputs[idx].className = 'benar';
+        benar++;
+      } else {
+        inputs[idx].className = 'salah';
+      }
+      idx++;
+    }
+  });
+  alert(`Skor: ${benar}/${total}`);
+}
+
+function reset(){
+  grid.querySelectorAll('input:not(.hitam)').forEach(i => {
+    i.value = '';
+    i.className = '';
+  });
+}
+
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('sw.js');
+}
+</script>
+</body>
+</html>

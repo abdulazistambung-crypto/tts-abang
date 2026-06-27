@@ -1,0 +1,15 @@
+json{
+  "name": "TTS 10 Soal",
+  "short_name": "TTS",
+  "start_url": "tts.html",
+  "display": "standalone",
+  "background_color": "#f3e8ff",
+  "theme_color": "#8b5cf6",
+  "icons": [
+    {
+      "src": "https://img.icons8.com/color/192/puzzle.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
